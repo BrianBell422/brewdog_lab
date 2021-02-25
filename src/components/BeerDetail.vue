@@ -9,13 +9,20 @@
         <div>
             <img id="beer-img" :src="beer.image_url" :alt="beer.name">
         </div>
+        <button v-if="!favouriteBeers.includes(beer)" v-on:click="addToFavourites" >Add beer to favourites</button>
     </div>
 </template>
 
 <script>
+import { eventBus } from '../main.js'
 export default {
     name: 'beer-detail',
-    props: ['beer']
+    props: ['beer', 'favouriteBeers'],
+    methods: {
+    addToFavourites: function(){
+        eventBus.$emit('favourite-beer', this.beer)
+    },
+  }
 }
 </script>
 

@@ -3,9 +3,9 @@
     <h1>Beers</h1>
     <div class="main-container">
       <beer-list :beers="beers"></beer-list>
-      <beer-detail :beer="selectedBeer"></beer-detail>
+      <beer-detail :beer="selectedBeer" :favouriteBeers="favouriteBeers"></beer-detail>
+      <favourite-beers :favouriteBeers="favouriteBeers"></favourite-beers>
     </div>
-    <button v-if="!favouriteBeers.includes(selectedBeer)" v-on:click="addToFavourites" >Add beer to favourites</button>
   </div>
 </template>
 
@@ -38,13 +38,18 @@ export default {
     eventBus.$on('beer-selected', (beer) => {
       this.selectedBeer = beer
     })
+    eventBus.$on('favourite-beer', (beer) => {
+    this.favouriteBeers.push(beer)
+    })
+    eventBus.$on('remove-favourite-beer', (favouriteBeer) => {
+      const index = this.favouriteBeers.findIndex((beer) => {
+        return beer === favouriteBeer
+      })
+      this.favouriteBeers.splice(index, 1)
+    })
   },
-  methods: {
-    addToFavourites: function(){
-      this.favouriteBeers.push(this.selectedBeer)
-    },
-  }
 }
+
 </script>
 
 <style>
