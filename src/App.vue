@@ -5,12 +5,14 @@
       <beer-list :beers="beers"></beer-list>
       <beer-detail :beer="selectedBeer"></beer-detail>
     </div>
+    <button v-if="!favouriteBeers.includes(selectedBeer)" v-on:click="addToFavourites" >Add beer to favourites</button>
   </div>
 </template>
 
 <script>
 import BeerList from './components/BeerList.vue'
 import BeerDetail from './components/BeerDetail.vue'
+import FavouriteBeers from './components/FavouriteBeers.vue'
 
 import { eventBus } from './main.js';
 
@@ -19,12 +21,14 @@ export default {
   data(){
     return {
       beers: [],
-      selectedBeer: null
+      selectedBeer: null,
+      favouriteBeers: []
     };
   },
   components: {
     "beer-list": BeerList,
-    "beer-detail": BeerDetail
+    "beer-detail": BeerDetail,
+    "favourite-beers": FavouriteBeers
   },
   mounted(){
     fetch('https://api.punkapi.com/v2/beers')
@@ -35,6 +39,11 @@ export default {
       this.selectedBeer = beer
     })
   },
+  methods: {
+    addToFavourites: function(){
+      this.favouriteBeers.push(this.selectedBeer)
+    },
+  }
 }
 </script>
 

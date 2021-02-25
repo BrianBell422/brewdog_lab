@@ -7,7 +7,7 @@
             <p><span>Volume</span>: {{beer.volume.value}} {{beer.volume.unit}}</p>
         </div>
         <div>
-            <img :src="beer.image_url" :alt="beer.name">
+            <img id="beer-img" :src="beer.image_url" :alt="beer.name">
         </div>
     </div>
 </template>
@@ -20,5 +20,7 @@ export default {
 </script>
 
 <style>
-
+#beer-img {
+    width: 100px;
+}
 </style>
